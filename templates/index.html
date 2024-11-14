@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SIDB Query Tool</title>
+    <script src="https://unpkg.com/htmx.org@2.0.3" integrity="sha384-0895/pl2MU10Hqc6jd4RvrthNlDiE9U1tWmX7WRESftEDRosgxNsQG/Ze9YMRzHq" crossorigin="anonymous"></script>
+    <script src="/static/js/main.js" defer></script>
+    <link rel="stylesheet" href="/static/styles/style.css">
+</head>
+<body>
+    <h1>SIDB Query Tool</h1>
+
+    <!-- Form for selecting category, context, and datasets -->
+    <form id="query-form">
+        <h3>Select Category</h3>
+        <select id="category-select" 
+                name="category"
+                hx-get="/data_categories" 
+                hx-trigger="load"
+                hx-target="this">
+            <option value="">Select a category...</option>
+        </select>
+
+        <h3>Select Context</h3>
+        <select id="context-select"
+                name="context">
+            <option value="">Select context...</option>
+        </select>
+
+        <h3>Select Datasets</h3>
+        <div id="datasets-select">
+            <div class="checkbox-group">
+                <input type="checkbox" id="default-dataset" value="" disabled>
+                <label for="default-dataset">Select a context to view available datasets...</label>
+            </div>
+        </div>
+
+        <button type="button" id="submit-button">Submit</button>
+    </form>
+
+    <h3>Results</h3>
+    <div id="results-container"></div>
+
+    <h3>Citations</h3>
+    <div id="citations-container"></div>
+</body>
+</html>
