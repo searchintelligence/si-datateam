@@ -1,46 +1,129 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>SIDB Query Tool</title>
-    <script src="https://unpkg.com/htmx.org@2.0.3" integrity="sha384-0895/pl2MU10Hqc6jd4RvrthNlDiE9U1tWmX7WRESftEDRosgxNsQG/Ze9YMRzHq" crossorigin="anonymous"></script>
-    <script src="/static/js/main.js" defer></script>
-    <link rel="stylesheet" href="/static/styles/style.css">
-</head>
-<body>
-    <h1>SIDB Query Tool</h1>
+	<head>
+		<title>Data Concierge</title>
+		<script src="/static/js/main.js" defer></script>
+		<link rel="stylesheet" href="/static/styles/main.css" />
+		<!-- HTMX -->
+		<script
+			src="https://unpkg.com/htmx.org@2.0.3"
+			integrity="sha384-0895/pl2MU10Hqc6jd4RvrthNlDiE9U1tWmX7WRESftEDRosgxNsQG/Ze9YMRzHq"
+			crossorigin="anonymous"
+		></script>
+		<!-- Tailwind CDN -->
+		<script src="https://cdn.tailwindcss.com"></script>
+	</head>
+	<body class="w-screen h-screen bg-gray-100 p-4">
+		<div class="w-full h-full flex flex-row">
+			<div class="panel w-60 h-full p-4 flex flex-col">
+				<form
+					id="query-form"
+					class="h-full w-full flex flex-col space-y-4"
+					hx-get="/data-table"
+					hx-trigger="change, load"
+					hx-target="#results"
+				>
+					<div class="flex flex-row items-center">
+						<div class="icon">􀧋</div>
+						<h3 class="ml-1">ROWS</h3>
+						<hr class="w-full ml-3" style="border-top: 1px solid black;"></hr>
+					</div>
+					
+					<select
+						class="w-full"
+						id="context-select"
+						name="context"
+						hx-get="/contexts"
+						hx-trigger="load"
+						hx-target="this"
+					>
+						<option value="">No Contexts Available</option>
+					</select>
 
-    <!-- Form for selecting category, context, and datasets -->
-    <form id="query-form">
-        <h3>Select Category</h3>
-        <select id="category-select" 
-                name="category"
-                hx-get="/data_categories" 
-                hx-trigger="load"
-                hx-target="this">
-            <option value="">Select a category...</option>
-        </select>
+					<div
+						class="w-full"
+						id="group-select"
+						name="group"
+						hx-get="/groups"
+						hx-trigger="load, change from:#context-select"
+						hx-include="#context-select"
+						hx-target="this"
+					></div>
 
-        <h3>Select Context</h3>
-        <select id="context-select"
-                name="context">
-            <option value="">Select context...</option>
-        </select>
+					<div class="flex flex-row items-center">
+						<div class="icon">􀕸</div>
+						<h3 class="ml-1">COLUMNS</h3>
+						<hr class="w-full ml-3" style="border-top: 1px solid black;"></hr>
+					</div>
 
-        <h3>Select Datasets</h3>
-        <div id="datasets-select">
-            <div class="checkbox-group">
-                <input type="checkbox" id="default-dataset" value="" disabled>
-                <label for="default-dataset">Select a context to view available datasets...</label>
-            </div>
-        </div>
+					<div
+						class="w-full"
+						id="set-select"
+						name="set"
+						hx-get="/datasets"
+						hx-trigger="load, change from:#context-select"
+						hx-include="#context-select"
+						hx-target="this"
+					></div>
 
-        <button type="button" id="submit-button">Submit</button>
-    </form>
+					<div class="flex flex-row items-center w-full">
+						<div class="icon">􀌉</div>
+						<h3 class="ml-2">FILTERS</h3>
+						<hr class="w-full ml-3" style="border-top: 1px solid black;"></hr>
+					</div>
 
-    <h3>Results</h3>
-    <div id="results-container"></div>
+					<div></div>
 
-    <h3>Citations</h3>
-    <div id="citations-container"></div>
-</body>
+					<div class="flex flex-row items-center w-full">
+						<div class="icon">􀣌</div>
+						<h3 class="ml-2">OPTIONS</h3>
+						<hr class="w-full ml-3" style="border-top: 1px solid black;"></hr>
+					</div>
+
+					<div>
+						<div class="flex flex-row items-center w-full">
+							<h3>Indexing:</h3>
+							<select>
+								<option value="none">None</option>
+								<option value="fixed">Fixed</option>
+								<option value="adjustable">Adjustable</option>
+							</select>
+						</div>
+					</div>
+
+				</form>
+				<button class="w-full">ADD DATA</button>
+			</div>
+
+			<div class="flex flex-col w-full h-full px-4">
+				<div id="results-container" class="panel p-4 w-full h-full">
+					<div class="flex flex-row items-center w-full justify-between">
+						<h3 class="text-xl font-black">DATA PREVIEW</h3>
+						<div>
+							<button class="ghost-button">􀅼 BUILD PROJECT</button>
+							<button class="ghost-button">􀄩 .XLSX</button>
+							<button class="ghost-button">􀄩 .CSV</button>
+						</div>
+					</div>
+					<hr class="my-4"></hr>
+					<div id="results"></div>
+				</div>
+					
+				<div
+					id="citations-container"
+					class="panel p-4 mt-4 w-full flex flex-col space-y-4"
+					hx-get="/citations"
+					hx-trigger="load, change from:#set-select"
+					hx-include="#set-select"
+					hx-target="#citations">
+					<div class="flex flex-row items-center w-full justify-between">
+						<h3 class="text-xl font-black">CITATIONS</h3>
+						<button class="ghost-button">􀐅 COPY ALL</button>
+					</div>
+					<hr class="my-4"></hr>
+					<div id="citations" class="flex flex-col space-y-4"></div>
+				</div>
+			</div>
+		</div>
+	</body>
 </html>

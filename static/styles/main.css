@@ -1,0 +1,85 @@
+:root {
+	font-family: "SF Pro", sans-serif;
+	font-feature-settings: "liga" 1, "calt" 1; /* fix for Chrome */
+	font-size: small;
+}
+@font-face {
+	font-family: "SF Pro";
+	src: url("../fonts/SF-Pro.ttf") format("truetype");
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: "SF Mono";
+	src: url("../fonts/SF-Mono-Regular.otf") format("opentype");
+	font-weight: normal;
+	font-style: normal;
+}
+b {
+	font-weight: 900;
+}
+select {
+	border-radius: 3px;
+	padding-left: 5px !important;
+	padding-right: 5px !important;
+	box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+button {
+	background-color: black !important;
+	color: white !important;
+	padding: 5px !important;
+	border-radius: 0.5rem;
+	box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+button:hover {
+	background-color: hsl(0, 0%, 10%) !important;
+	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+a {
+    color: #5d1595 !important;
+    text-decoration: underline;
+}
+a:hover {
+    color: #7d35b5 !important;
+    text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15);
+}
+table {
+    border-collapse: collapse;
+    background-color: white;
+}
+th {
+    background-color: white;
+    font-weight: bold;
+    border-bottom: 1em;
+}
+td:not(:first-child) {
+    font-family: "SF Mono" !important;
+    text-align: right;
+}
+tr:nth-child(odd) {
+    background-color: hsl(0, 0%, 95%);
+}
+.panel {
+	background-color: white;
+	box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+	border-radius: 1rem;
+}
+.icon {
+    font-family: "SF Pro", sans-serif !important;
+    padding: 0.1em;
+}
+.ghost-button {
+    background-color: white !important;
+    color: rgba(0, 0, 0, 0.9) !important;
+    border: 1px solid rgba(0, 0, 0, 0.5) !important;
+    border-radius: 0.5rem;
+    padding-left: 0.4em !important;
+    padding-right: 0.4em !important;
+    padding-top: 0.1em !important;
+    padding-bottom: 0.1em !important;
+    box-shadow: none !important;
+	font-size: x-small;
+}
+.ghost-button:hover {
+    background-color: rgba(0, 0, 0, 0.05) !important;
+}
